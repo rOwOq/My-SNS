@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mysns.FeedDAO">
+    <insert id="insertFeed" parameterType="com.example.mysns.FeedVO">
+        INSERT INTO feed (content, user_id, created_at)
+        VALUES (#{content}, #{userId}, #{createdAt});
+        <selectKey keyProperty="no" resultType="int" order="AFTER">
+            SELECT last_insert_rowid()
+        </selectKey>
+    </insert>
+    <!-- 모든 피드 조회 -->
+    <select id="selectAllFeed" resultType="com.example.mysns.FeedVO">
+        SELECT * FROM feed ORDER BY no DESC
+    </select>
+    <select id="selectFeed" resultType="com.example.mysns.FeedVO">
+        SELECT * FROM feed WHERE no = #{no}
+    </select>
+
+    <delete id="deleteFeed" parameterType="int">
+        DELETE FROM feed WHERE no = #{no}
+    </delete>
+
+</mapper>
